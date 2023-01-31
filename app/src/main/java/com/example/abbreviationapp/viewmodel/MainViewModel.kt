@@ -7,10 +7,16 @@ import androidx.lifecycle.viewModelScope
 import com.example.abbreviationapp.model.MeaningsData
 import com.example.abbreviationapp.repository.MainRepository
 import com.example.abbreviationapp.repository.NetworkState
+import com.example.abbreviationapp.retrofit.ApiInterface
+import com.example.abbreviationapp.utils.ValidationUtil
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class MainViewModel constructor(private val mainRepository: MainRepository) : ViewModel() {
+/**
+ *  This is MainViewModel class, which has complete business logic for fetching large forms,
+ *  for the sort form provided by user, and display the list on screen.
+ */
+class MainViewModel : ViewModel() {
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String>
@@ -18,14 +24,16 @@ class MainViewModel constructor(private val mainRepository: MainRepository) : Vi
     val largeFormList = MutableLiveData<List<String>>()
     private var job: Job? = null
     val loading = MutableLiveData(false)
+    private val retrofitClient = ApiInterface.getInstance()
+    private val mainRepository = MainRepository(retrofitClient)
 
     fun getMeaningsData(sortForm: String) {
         viewModelScope.launch {
-            loading.value = true
+            loading.postValue(true)
             when (val response = mainRepository.getMeaningsData(sortForm)) {
                 is NetworkState.Success -> {
                     getLargeFormsList(response.data)
-                    loading.value = false
+                    loading.postValue(false)
                 }
                 is NetworkState.Error -> {
                     onError(response.toString())
@@ -42,13 +50,13 @@ class MainViewModel constructor(private val mainRepository: MainRepository) : Vi
             }
             largeFormList.postValue(tempLfArrayList)
         } else {
-            onError("Response is null or empty")
+            onError(ValidationUtil.RESPONSE_ERROR_MESSAGE)
         }
     }
 
     private fun onError(message: String) {
         _errorMessage.value = message
-        loading.value = false
+        loading.postValue(false)
     }
 
     override fun onCleared() {

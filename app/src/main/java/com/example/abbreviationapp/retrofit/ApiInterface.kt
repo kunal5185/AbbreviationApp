@@ -7,6 +7,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+/**
+ * This is ApiInterface, which provides Retrofit Client to call web API.
+ * It also declares GET API to fetch full form response for the sort form provided by user.
+ */
 interface ApiInterface {
 
     @GET("dictionary.py")

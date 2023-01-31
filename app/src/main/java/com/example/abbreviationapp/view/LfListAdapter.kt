@@ -6,6 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.abbreviationapp.databinding.RvItemBinding
 
+/**
+ * This is ListAdapter class to display list of large forms in recyclerview.
+ */
 class LfListAdapter : RecyclerView.Adapter<MainViewHolder>() {
 
     private var largeFormsList = mutableListOf<String>()

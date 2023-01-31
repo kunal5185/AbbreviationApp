@@ -12,18 +12,24 @@ class ValidationUtilTest {
     @Test
     fun validateAbbreviationTest() {
         val abbreviation = "HMM"
-        assertEquals(true, ValidationUtil.isValid(abbreviation))
+        assertEquals(true, ValidationUtil.isValid(abbreviation).first)
     }
 
     @Test
     fun validateEmptyAbbreviationTest() {
         val abbreviation = ""
-        assertEquals(false, ValidationUtil.isValid(abbreviation))
+        assertEquals(false, ValidationUtil.isValid(abbreviation).first)
+    }
+
+    @Test
+    fun validateSingleCharAbbreviationTest() {
+        val abbreviation = "a"
+        assertEquals(false, ValidationUtil.isValid(abbreviation).first)
     }
 
     @Test
     fun validateSpecialCharAbbreviationTest() {
         val abbreviation = "a@a"
-        assertEquals(false, ValidationUtil.isValid(abbreviation))
+        assertEquals(false, ValidationUtil.isValid(abbreviation).first)
     }
 }
