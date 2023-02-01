@@ -11,7 +11,9 @@ import com.example.abbreviationapp.repository.MainRepository
 import com.example.abbreviationapp.repository.NetworkState
 import com.example.abbreviationapp.retrofit.ApiInterface
 import com.example.abbreviationapp.utils.ValidationUtil
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.UnknownHostException
 
 /**
  *  This is MainViewModel class, which has complete business logic for fetching large forms,
@@ -30,16 +32,22 @@ class MainViewModel : ViewModel(), Observable {
 
     //API call to fetch meanings data for sortForm provided by user.
     fun getMeaningsData(sortForm: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             loading.postValue(View.VISIBLE)
-            when (val response = mainRepository.getMeaningsData(sortForm)) {
-                is NetworkState.Success -> {
-                    getLargeFormsList(response.data)
-                    loading.postValue(View.GONE)
+            try {
+                when (val response = mainRepository.getMeaningsData(sortForm)) {
+                    is NetworkState.Success -> {
+                        getLargeFormsList(response.data)
+                        loading.postValue(View.GONE)
+                    }
+                    is NetworkState.Error -> {
+                        onError(response.toString())
+                    }
                 }
-                is NetworkState.Error -> {
-                    onError(response.toString())
-                }
+            } catch (ex: UnknownHostException) {
+                onError(ValidationUtil.NETWORK_ERROR_MESSAGE)
+            } catch (ex: java.lang.Exception) {
+                onError(ex.stackTraceToString())
             }
         }
     }
@@ -58,7 +66,7 @@ class MainViewModel : ViewModel(), Observable {
     }
 
     private fun onError(message: String) {
-        _errorMessage.value = message
+        _errorMessage.postValue(message)
         loading.postValue(View.GONE)
     }
 

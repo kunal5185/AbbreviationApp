@@ -8,6 +8,7 @@ object ValidationUtil {
     private const val EMPTY_SF_MESSAGE = "Please provide valid abbreviation."
     private const val SINGLE_CHAR_SF_MESSAGE = "Abbreviation can't be single character."
     private const val NON_ALPHABET_SF_MESSAGE = "Abbreviation can contain only alphabets."
+    const val NETWORK_ERROR_MESSAGE = "Please check Internet Connectivity."
     const val RESPONSE_ERROR_MESSAGE = "Response is null or empty."
     fun isValid(abbreviation: String): Pair<Boolean, String> {
         return if (abbreviation.isEmpty())
