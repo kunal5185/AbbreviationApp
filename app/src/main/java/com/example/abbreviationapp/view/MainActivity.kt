@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     }
                     else -> {
                         viewModel.getMeaningsData(abbreviation)
+                        binding.recyclerview.smoothScrollToPosition(0)
                     }
                 }
             }

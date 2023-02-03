@@ -37,31 +37,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/btn_layout"
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/search_btn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp10"
-            android:gravity="center"
+            android:onClick="onClick"
+            android:text="@string/search"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toStartOf="@+id/reset_btn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/abbEditText">
+            app:layout_constraintTop_toBottomOf="@id/abbEditText" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/search_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onClick"
-                android:text="@string/search"
-                android:textAllCaps="false" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/reset_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onClick"
-                android:text="@string/reset"
-                android:textAllCaps="false" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reset_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
+            android:onClick="onClick"
+            android:text="@string/reset"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/search_btn"
+            app:layout_constraintTop_toBottomOf="@id/abbEditText" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
@@ -70,10 +71,10 @@
             android:layout_marginTop="@dimen/dp30"
             android:paddingBottom="@dimen/app_bar_height"
             android:scrollbars="vertical"
-            android:visibility="@{mainViewModel.rvVisibility}"
+            android:visibility="@{mainViewModel.loading}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_layout"
+            app:layout_constraintTop_toBottomOf="@id/search_btn"
             tools:listitem="@layout/rv_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
