@@ -1,7 +1,6 @@
 package com.example.abbreviationapp.viewmodel
 
 import android.view.View
-import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,7 +18,7 @@ import java.net.UnknownHostException
  *  This is MainViewModel class, which has complete business logic for fetching large forms,
  *  for the sort form provided by user, and display the list on screen.
  */
-class MainViewModel : ViewModel(), Observable {
+class MainViewModel : ViewModel() {
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String>
@@ -68,11 +67,5 @@ class MainViewModel : ViewModel(), Observable {
     private fun onError(message: String) {
         _errorMessage.postValue(message)
         loading.postValue(View.GONE)
-    }
-
-    override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
-    }
-
-    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
     }
 }
