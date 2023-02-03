@@ -71,7 +71,7 @@
             android:layout_marginTop="@dimen/dp30"
             android:paddingBottom="@dimen/app_bar_height"
             android:scrollbars="vertical"
-            android:visibility="@{mainViewModel.loading}"
+            android:visibility="@{mainViewModel.rvVisibility}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_btn"
